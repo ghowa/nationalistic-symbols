@@ -132,6 +132,7 @@ class VisualizationDemo(object):
     def _frame_from_video(self, video):
         frame_count = int(video.get(cv2.CAP_PROP_FRAME_COUNT))
         counter = 0
+        errors = 0
         while video.isOpened():
             success, frame = video.read()
             counter += 1
@@ -141,7 +142,8 @@ class VisualizationDemo(object):
                 if counter >= frame_count:
                     break
                 else:
-                    print("Faulty frame: ", counter)
+                    errors += 1
+        print("Frame errors: ", errors)
 
     def run_on_video(self, video, frame_skip=0, visualization=False):
         """
