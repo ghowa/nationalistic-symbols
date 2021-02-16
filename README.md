@@ -4,13 +4,13 @@ This repository combines demo scripts and pretrained models to recognise various
 
 ## Setup
 
-First you have to manually install Detectron2 and Facenet, see instructions [here](https://github.com/facebookresearch/detectron2/blob/master/INSTALL.md) and [here](https://github.com/sepastian/facenet/blob/master/HOWTO.md). After installing Detectron2 and Facenet, you can use pip install -r requirements.txt to install the other needed packages. **Please note that Facenet needs Tensorflow, which as of yet is not running under Python 3.9.**
+First you have to manually install Detectron2 and Facenet, see instructions [here](https://github.com/facebookresearch/detectron2/blob/master/INSTALL.md) and [here](https://github.com/sepastian/facenet/blob/master/HOWTO.md). After installing Detectron2 and Facenet, you can use pip install -r requirements.txt to install the other needed packages. **Please note that Facenet needs Tensorflow, which as of yet is not running under Python 3.9. You can create a virtual environment using Python 3.8 with `python3.8 -m venv .`** 
 
 ## Usage
 
 Symbol recognition in a video:
 
-`python demo.py --config configs/nationalist_symbols.yaml --video-input video.mp4 --output output/ --frame-skip 10 --opts MODEL.DEVICE cpu`
+`python scripts/demo.py --config configs/nationalist_symbols.yaml --video-input video.mp4 --output output/ --frame-skip 10 --opts MODEL.DEVICE cpu`
 
 Create 'output' folder first; annotated video and a json holding all recognized symbols will be stored here. Use --frame-skip to speed up the process (only each 
 *n*th frame is used for recognition) and use --opts MODEL.DEVICE cpu if you don't have a Nvidia GPU.
