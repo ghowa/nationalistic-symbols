@@ -4,7 +4,7 @@ This repository combines demo scripts and pretrained models to recognise various
 
 ## Setup
 
-First you have to manually install Detectron2 and Facenet, see instructions [here](https://github.com/facebookresearch/detectron2/blob/master/INSTALL.md) and [here](https://github.com/sepastian/facenet/blob/master/HOWTO.md). After installing Detectron2 and Facenet, you can use pip install -r requirements.txt to install the other needed packages. **Please note that Facenet needs Tensorflow, which as of yet is not running under Python 3.9. You can create a virtual environment using Python 3.8 with `python3.8 -m venv .`** 
+First you have to manually install Detectron2 and Facenet, see instructions [here](https://github.com/facebookresearch/detectron2/blob/master/INSTALL.md) and [here](https://github.com/sepastian/facenet/blob/master/HOWTO.md). After installing Detectron2 and Facenet, you can use pip install -r requirements.txt to install the other needed packages.
 
 ## Usage
 
@@ -20,6 +20,32 @@ Face recognition in images (stored in the 'images' folder):
 `python src/classifier.py CLASSIFY images/ ../models/20180402-114759/20180402-114759.pb ../models/politicians.pkl --batch_size 1000`
 
 Note: You have to download the generic pretrained model first (see install instructions).
+
+## Model Performance
+
+[12/05 01:47:46 d2.evaluation.coco_evaluation]: Evaluation results for segm: 
+|   AP   |  AP50  |  AP75  |  APs  |  APm   |  APl   |
+|:------:|:------:|:------:|:-----:|:------:|:------:|
+| 58.611 | 75.794 | 64.684 |  nan  | 10.000 | 62.292 |
+[12/05 01:47:46 d2.evaluation.coco_evaluation]: Note that some metrics cannot be computed.
+[12/05 01:47:46 d2.evaluation.coco_evaluation]: Per-category segm AP: 
+| category              | AP     | category             | AP     | category             | AP     |
+|:----------------------|:-------|:---------------------|:-------|:---------------------|:-------|
+| bandera 1             | 52.962 | bandera 2            | 75.438 | bandera 3            | 83.650 |
+| crest_bg              | 83.072 | crest_by             | 84.087 | crest_by_opp         | 71.723 |
+| crest_me              | 72.738 | crest_pl             | 88.285 | crest_rs             | 76.234 |
+| crest_ua              | 41.392 | cross                | 35.618 | cross_orthodox       | 38.685 |
+| cross_serbian         | 70.247 | eu                   | 65.126 | falanga              | 49.673 |
+| flag_bg_hanging       | 58.628 | flag_bg_waving       | 68.266 | flag_by_hanging      | 75.524 |
+| flag_by_waving        | 80.001 | flag_by_opp_hanging  | 30.986 | flag_by_opp_waving   | 37.250 |
+| flag_me_hanging       | 74.230 | flag_me_waving       | 94.675 | flag_rs_hanging      | 69.894 |
+| flag_rs_waving        | 69.869 | flag_ru_hanging      | 40.152 | flag_ru_waving       | 64.079 |
+| flag_soc_hanging      | 73.437 | flag_soc_waving      | 84.485 | flag_ua_hanging      | 43.399 |
+| flag_ua_waving        | 45.136 | flag_upa_hanging     | 11.081 | flag_upa_waving      | 35.334 |
+| george_ribbon_hanging | 38.060 | george_ribbon_waving | 56.608 | george_ribbon_folded | 40.598 |
+| hammer_sickle         | 31.685 | nato                 | 85.251 | oun                  | 56.942 |
+| ss_rune               | 27.394 | swastika             | 33.306 | swoboda              | 60.679 |
+| three_fingers         | 45.443 | wolfsangel           | 57.564 |                      |    
 
 ## Acknowledgements
 
