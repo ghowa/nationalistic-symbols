@@ -25,12 +25,9 @@ Note: You have to download the generic pretrained model first (see install instr
 
 [12/05 01:47:46 d2.evaluation.coco_evaluation]: Evaluation results for segm: 
 |   AP   |  AP50  |  AP75  |  APs  |  APm   |  APl   |
-|:------:|:------:|:------:|:-----:|:------:|:------:|
 | 58.611 | 75.794 | 64.684 |  nan  | 10.000 | 62.292 |
-[12/05 01:47:46 d2.evaluation.coco_evaluation]: Note that some metrics cannot be computed.
-[12/05 01:47:46 d2.evaluation.coco_evaluation]: Per-category segm AP: 
+Per-category segm AP: 
 | category              | AP     | category             | AP     | category             | AP     |
-|:----------------------|:-------|:---------------------|:-------|:---------------------|:-------|
 | bandera 1             | 52.962 | bandera 2            | 75.438 | bandera 3            | 83.650 |
 | crest_bg              | 83.072 | crest_by             | 84.087 | crest_by_opp         | 71.723 |
 | crest_me              | 72.738 | crest_pl             | 88.285 | crest_rs             | 76.234 |
