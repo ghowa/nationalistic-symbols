@@ -19,7 +19,7 @@ Face recognition in images (stored in the 'images' folder):
 
 `python src/classifier.py CLASSIFY images/ ../models/20180402-114759/20180402-114759.pb ../models/politicians.pkl --batch_size 1000`
 
-Note: You have to download the generic pretrained model first (see install instructions).
+Note: You have to download the generic pretrained model first (see install instructions). In order to pull our own models from the repository, you need Git LFS.
 
 ## Model Performance
 
@@ -49,4 +49,4 @@ Per-category segm AP:
 
 ## Acknowledgements
 
-This project was funded by the [DI4DH initiative](https://www.uibk.ac.at/digital-humanities/ausschreibung-di4dh.html) at the University of Innsbruck, Austria.
+Initial training annotations were funded by the German [BMBF](https://www.bmbf.de) at the University of Passau, Germany. Further annotations were funded by the [DI4DH initiative](https://www.uibk.ac.at/digital-humanities/ausschreibung-di4dh.html) at the University of Innsbruck, Austria. Training was conducted using the infrastructure of the [Research Center High Performance Computing](https://www.uibk.ac.at/fz-hpc/) in Innsbruck.

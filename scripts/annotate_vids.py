@@ -7,38 +7,9 @@ import numpy as np
 from tqdm import tqdm
 from detectron2.utils.colormap import colormap
 
-CATS = [
-    "adler",
-    "bandera1",
-    "bandera2",
-    "bandera3",
-    "eu",
-    "falanga",
-    "flag_ru_hang",
-    "flag_ru_fly",
-    "flag_ru",
-    "flag_ua_hang",
-    "flag_ua_fly",
-    "flag_ua",
-    "flag_upa_hang",
-    "flag_upa_fly",
-    "flag_upa",
-    "george_hang",
-    "george_fly",
-    "george_band",
-    "george",
-    "swastika",
-    "hammer",
-    "cross",
-    "orthodox",
-    "nato",
-    "oun",
-    "ss",
-    "swoboda",
-    "ukraine",
-    "wolfsangel",
-]
-
+CATS = []
+with open("annotations/bandera-v4.0.0-categories") as f:
+    CATS = f.read().split("\n")
 
 def main():
     if len(sys.argv) <= 1:
@@ -68,8 +39,14 @@ def main():
         with open(vid_json) as json_file:
             anns = json.load(json_file)
         frame_skip = anns['frame_skip']
-        ann_iter = iter(anns['annotations'])
-        ann = next(ann_iter)
+        
+        anns_per_frame = {}
+
+        for ann in anns["annotations"]:
+            try:
+                anns_per_frame[ann["image_id"]].append(ann)
+            except KeyError:
+                anns_per_frame[ann["image_id"]]=[ann]
 
         # load vids
         video = cv2.VideoCapture(vid_file)
@@ -99,46 +76,43 @@ def main():
             for frame in frame_gen:
                 bar.update(1)
                 frame_no += 1
-                if frame_no == ann['image_id']:
-                    result = frame.copy()
+                result = frame.copy()
+                if frame_no in anns_per_frame.keys():
+                    for ann in anns_per_frame[frame_no]:
 
-                    # draw ann on frame
-                    cat = ann['category_id']
-                    score = ann['score']
-                    poly = ann['segmentation']
-                    box = ann['bbox']
+                        # draw ann on frame
+                        cat = ann['category_id']
+                        score = ann['score']
+                        poly = ann['segmentation']
+                        box = ann['bbox']
 
-                    # convert and draw poly
-                    for p in poly:
-                        overlay = frame.copy()
-                        p = np.array(p)
-                        p1 = []
-                        for index, point in enumerate(p):
-                            if index % 2 == 0:
-                                continue
-                            else:
-                                p1.append([p[index - 1], p[index]])
+                        # convert and draw poly
+                        for p in poly:
+                            overlay = frame.copy()
+                            p = np.array(p)
+                            p1 = []
+                            for index, point in enumerate(p):
+                                if index % 2 == 0:
+                                    continue
+                                else:
+                                    p1.append([p[index - 1], p[index]])
 
-                        p1 = np.int32([p1])
+                            p1 = np.int32([p1])
 
-                        c = tuple(map(int, colormap()[cat]))
-                        cv2.fillPoly(overlay, p1, c)
-                        cv2.addWeighted(overlay, 0.5, result, 1 - 0.5, 0, result)
+                            c = tuple(map(int, colormap()[cat]))
+                            cv2.fillPoly(overlay, p1, c)
+                            cv2.addWeighted(overlay, 0.5, result, 1 - 0.5, 0, result)
 
-                    # add text
-                    cv2.putText(result, CATS[cat] + " (" + str(round(score, 2)) + ")", (int(box[0]), int(box[1])), cv2.FONT_HERSHEY_SIMPLEX , 0.5, c, 1, cv2.LINE_AA)
+                        # add text
 
-                    # write output
-                    if continuous:
-                        frame = result
-                    else:
-                        cv2.imwrite(os.path.join(vid_base, str(ann['image_id']) + ".jpg"), result)
-                    try:
-                        ann = next(ann_iter)
-                    except StopIteration:
-                        continue
+                        cv2.putText(result, CATS[cat] + " (" + str(round(score, 2)) + ")", (int(box[0]), int(box[1])), cv2.FONT_HERSHEY_SIMPLEX , 0.5, c, 1, cv2.LINE_AA)
+
+                # write output
                 if continuous:
-                    writer.write(frame)
+                    writer.write(result)
+                else:
+                    cv2.imwrite(os.path.join(vid_base, str(ann['image_id']) + ".jpg"), result)
+                    
         if continuous:
             writer.release()
 

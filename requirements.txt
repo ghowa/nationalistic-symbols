@@ -15,7 +15,6 @@ cycler==0.10.0
 Cython==0.29.21
 decorator==4.4.2
 defusedxml==0.6.0
-detectron2==0.3
 entrypoints==0.3
 future==0.18.2
 fvcore==0.1.2.post20210128
@@ -107,9 +106,6 @@ terminado==0.9.2
 testpath==0.4.4
 threadpoolctl==2.1.0
 tifffile==2021.1.14
-torch==1.7.1+cpu
-torchaudio==0.7.2
-torchvision==0.8.2+cpu
 tornado==6.1
 tqdm==4.56.0
 traitlets==5.0.5
