@@ -1,4 +1,4 @@
-# Contextualising Bandera: Deep Watching Demo Scripts
+# Nationalist(ic) Symbols from Eastern Europe: Deep Watching Demo Scripts
 
 This repository combines demo scripts and pretrained models to recognise various nationalist(ic) symbols (using Detectron2) and politicians (using Facenet) from Eastern Europe.
 
