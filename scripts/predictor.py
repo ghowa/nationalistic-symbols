@@ -9,7 +9,7 @@ import torch
 import numpy as np
 from skimage import measure
 from shapely.geometry import Polygon, MultiPolygon
-from shapely.ops import cascaded_union
+from shapely.ops import unary_union
 
 from detectron2.data import MetadataCatalog
 from detectron2.engine.defaults import DefaultPredictor
@@ -43,7 +43,7 @@ class VisualizationDemo(object):
                 if not isinstance(poly, MultiPolygon):
                     poly = MultiPolygon([poly])
                 polygons.append(poly)
-                for p in poly:
+                for p in poly.geoms:
                     segmentation = np.array(p.exterior.coords).ravel().tolist()
                     segmentations.append(segmentation)
             except ValueError:
@@ -53,7 +53,7 @@ class VisualizationDemo(object):
 
         # Combine the polygons to calculate the bounding box and area
         # multi_poly = MultiPolygon(polygons)
-        polygons = cascaded_union(polygons)
+        polygons = unary_union(polygons)
         try:
             x, y, max_x, max_y = polygons.bounds
             width = max_x - x

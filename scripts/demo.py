@@ -57,6 +57,10 @@ metadata = {
 def setup_cfg(args):
     # load config from file and command-line arguments
     # next line is only needed to get class names; test.json and test_images do not need to exist as files/directories!
+    metadata = {"thing_classes": []}
+    with open(args.classes_file) as f:
+        metadata["thing_classes"] = f.read().split("\n")
+    print(metadata["thing_classes"])
     register_coco_instances("bandera_test", metadata,
                             "test.json", "test_images")
     cfg = get_cfg()
@@ -80,6 +84,12 @@ def get_parser():
         default="configs/quick_schedules/mask_rcnn_R_50_FPN_inference_acc_test.yaml",
         metavar="FILE",
         help="path to config file",
+    )
+    parser.add_argument(
+        "--classes-file",
+        help="File holding all class names for instance detection",
+        default="",
+        metavar="FILE"
     )
     parser.add_argument("--video-input", help="Path to video file.")
     parser.add_argument(
@@ -120,16 +130,24 @@ if __name__ == "__main__":
 
     vis_demo = VisualizationDemo(cfg)
 
+    out_list = [x.split(".")[0] for x in os.listdir(args.output)]
+
     if args.video_input:
         vid_list = []
         path = ""
+        print(args.video_input)
         if os.path.isdir(args.video_input):
             vid_list = os.listdir(args.video_input)
             path = args.video_input + os.path.sep 
         elif os.path.isfile(args.video_input):
             vid_list = [args.video_input]
 
+        print(out_list)
+
         for vid in vid_list:
+            print(vid.split(".")[0])
+            if vid.split(".")[0] in out_list:
+                continue
             video = cv2.VideoCapture(os.path.join(path, vid))
             width = int(video.get(cv2.CAP_PROP_FRAME_WIDTH))
             height = int(video.get(cv2.CAP_PROP_FRAME_HEIGHT))
